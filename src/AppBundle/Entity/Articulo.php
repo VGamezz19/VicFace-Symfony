@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Articulo
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Trascastro\UserBundle\Entity\User", inversedBy="articulos")
+     */
+    private $user;
     /**
      * @var int
      *
