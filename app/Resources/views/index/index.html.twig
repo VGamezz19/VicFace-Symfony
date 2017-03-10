@@ -1,5 +1,15 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    <h1>New Project Created</h1>
+    <h1>Articles CRUD</h1>
+
+    <tbody>
+    {% for articulo in articulos %}
+
+        <tr>
+            <th>{{articulo.getTitle}}</th>
+        </tr>
+
+    {% endfor %}
+    </tbody>
 {% endblock %}

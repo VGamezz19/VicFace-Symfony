@@ -2,11 +2,14 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\AppBundle;
 use AppBundle\Entity\Image;
+use AppBundle\Entity\Articulo;
 use AppBundle\Form\ImageType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+
 
 class IndexController extends Controller
 {
@@ -15,7 +18,15 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
-        return $this->render(':index:index.html.twig');
+        $m = $this->getDoctrine()->getManager();
+        $report = $m->getRepository('AppBundle:Articulo');
+        $articulos = $report->findAll();
+
+        return $this->render('index/index.html.twig',
+            [
+                'articulos' => $articulos
+            ]);
+
     }
 
     /**
