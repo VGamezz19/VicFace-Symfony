@@ -10,6 +10,7 @@ use AppBundle\Form\ImageType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 class IndexController extends Controller
@@ -78,6 +79,21 @@ class IndexController extends Controller
                 'action' => $this->generateUrl('app_articulo_createAction')
 
             ]);
+    }
+
+    /**
+     * @Route("/delete/{id}", name="app_articulo_delete")
+     *
+     * @ParamConverter(name="articulo", class="AppBundle:Articulo")
+     */
+    public function deleteAction ($articulo) {
+
+        $m = $this->getDoctrine()->getManager();
+        $m->remove($articulo);
+        $m->flush();
+        $this->addFlash('messages', 'Producto eliminao CHAACHO');
+
+        return $this->redirectToRoute('app_index_index');
     }
 
 

@@ -14,7 +14,7 @@
                 <h4 class="card-title">{{ articulo.titulo }}</h4>
                 {% if articulo.user == app.user%}
                     <span >
-                        <input type="button" href = "/delete" class ="glyphicon glyphicon-remove">
+                        <a class ="fi glyphicon glyphicon-remove" href="{{ path('app_articulo_delete', {'id' : articulo.id}) }}"></a>
                     </span>
                 {% endif %}
                 <p class="card-text">{{ articulo.user }}</p>
