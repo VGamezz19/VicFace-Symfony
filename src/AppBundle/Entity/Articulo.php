@@ -54,6 +54,16 @@ class Articulo
      */
     private $updateAt;
 
+    /**
+     * Articulo constructor
+     * @param \DateTime $createAt
+     * @param \DateTime $updateAt
+     */
+    public function __construct()
+    {
+        $this->createAt = new \DateTime();
+        $this->updateAt = $this->createAt;
+    }
 
     /**
      * Get id
@@ -63,6 +73,22 @@ class Articulo
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
     }
 
     /**

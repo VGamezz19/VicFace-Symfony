@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\AppBundle;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\Articulo;
+use AppBundle\Form\ArticuloType;
 use AppBundle\Form\ImageType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,16 +19,67 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
+
         $m = $this->getDoctrine()->getManager();
         $report = $m->getRepository('AppBundle:Articulo');
         $articulos = $report->findAll();
 
         return $this->render('index/index.html.twig',
             [
-                'articulos' => $articulos
+                'articulos' => $articulos,
             ]);
 
     }
+
+
+    /**
+     * @Route("/create", name="app_articulo_create")
+     *
+     */
+    public function createAction (){
+
+        $articulo = new Articulo();
+        $form = $this->createForm(ArticuloType::class, $articulo);
+
+        return $this->render(':index:upload.html.twig',
+            [
+                'form' => $form->createView(),
+                'headTitle' => 'Create Article',
+                'action' => $this->generateUrl('app_articulo_createAction')
+
+            ]
+
+        );
+    }
+    /**
+     * @Route("/createAction/", name="app_articulo_createAction")
+     *
+     */
+    public function doCreateAction (Request $request){
+
+        $articulo = new Articulo();
+        $form = $this->createForm(ArticuloType::class, $articulo);
+        $form->handleRequest($request);
+        if ($form -> isValid()){
+            $m = $this->getDoctrine()->getManager();
+
+            $articulo->setUser($this->getUser()); //Añadimos el usuario
+
+            $m->persist($articulo);
+            $m->flush();
+            $this->addFlash('messages', 'Producto añadido TETE');
+
+            return $this->redirectToRoute('app_index_index'); //para generar otravez la tabla principal
+        }
+        $this->addFlash('messages', 'XAVAL! QUE TE HAS "EJIBOJAO"');
+        return $this->render(':index:upload.html.twig',
+            [
+                'form' => $form->createView(),
+                'action' => $this->generateUrl('app_articulo_createAction')
+
+            ]);
+    }
+
 
     /**
      * @Route("/upload", name="app_index_upload")

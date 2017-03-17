@@ -65,10 +65,27 @@ class User extends BaseUser
     }
 
     /**
+     * @return mixed
+     */
+    public function getArticulos()
+    {
+        return $this->articulos;
+    }
+
+    /**
+     * @param mixed $articulos
+     */
+    public function setArticulos($articulos)
+    {
+        $this->articulos = $articulos;
+    }
+
+    /**
      * Get createdAt
      *
      * @return \DateTime
      */
+
     public function getCreatedAt()
     {
         return $this->createdAt;
