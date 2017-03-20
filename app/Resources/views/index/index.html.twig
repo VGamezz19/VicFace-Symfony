@@ -15,10 +15,13 @@
                 {% if articulo.user == app.user%}
                     <span >
                         <a class ="fi glyphicon glyphicon-remove" href="{{ path('app_articulo_delete', {'id' : articulo.id}) }}"></a>
+                        <a class ="fi glyphicon glyphicon-pencil" href="{{ path('app_articulo_update', {'id' : articulo.id}) }}"></a>
                     </span>
                 {% endif %}
                 <p class="card-text">{{ articulo.user }}</p>
                 <p> {{ articulo.cuerpo }}</p>
+                <p> Fecha de creacion: {{ articulo.createAt|date("d/m/y H:i:s") }}</p>
+                <p> Ultima actualizacion: {{ articulo.updateAt|date("d/m/y H:i:s") }}</p>
             </div>
         </div>
         </div>

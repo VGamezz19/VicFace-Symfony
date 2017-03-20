@@ -98,6 +98,50 @@ class IndexController extends Controller
 
 
     /**
+     *
+     * @Route("/update/{id}", name="app_articulo_update")
+     *
+     */
+    public function updateAction(Request $request, $id)
+    {
+
+        $m = $this->getDoctrine()->getManager();
+        $report = $m->getRepository('AppBundle:Articulo');
+        $p = $report->find($id);
+        $form = $this->createForm(ArticuloType::class, $p);
+        return $this->render(':index:upload.html.twig',
+            [
+                'form' => $form->createView(),
+                'headTitle' => 'Create Article',
+                'action' => $this->generateUrl('app_articulo_updateAction', ['id' => $id])
+            ]);
+    }
+    /**
+     * @Route("/updateAction/{id}", name="app_articulo_updateAction")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function doUpdateAction(Request $request, $id)
+    {
+        $m = $this->getDoctrine()->getManager();
+        $report = $m->getRepository('AppBundle:Articulo');
+        $p = $report->find($id);
+        $form = $this->createForm(ArticuloType::class, $p);
+        $form->handleRequest($request);
+        if ($form->isValid()){
+            $m->flush();
+            $this->addFlash('messages', 'Producto UPDATEAO PAYOOO');
+            return $this->redirectToRoute('app_index_index');
+        }
+        $this->addFlash('messages','Tu eres tonto o que payaso? caranchoa');
+        return $this->render(':index:upload.html.twig',
+            [
+                'form' => $form->createView(),
+                'action' => $this->generateUrl('app_articulo_updateAction', ['id' => $id])
+
+            ]);
+    }
+
+    /**
      * @Route("/upload", name="app_index_upload")
      */
     public function uploadAction(Request $request)
