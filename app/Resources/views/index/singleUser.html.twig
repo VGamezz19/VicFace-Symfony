@@ -1,0 +1,28 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    <h1> {{ usuario }}</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Titulo</th>
+            <th>Cuerpo</th>
+            <th>Create At</th>
+            <th>Update At</th>
+        </tr>
+        </thead>
+        {% for articulo in articulos %}
+            <tbody>
+            <tr>
+                <td>{{ articulo.getTitulo}}</td>
+                <td maxlength="3">{{ articulo.getCuerpo }}</td>
+                <td>{{ articulo.getCreateAt|date("d/m/y H:i:s") }}</td>
+                <td>{{ articulo.getUpdateAt|date("d/m/y H:i:s") }}</td>
+            </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+
+{% endblock %}

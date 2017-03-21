@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Trascastro\UserBundle\Entity\User;
 
 
 class IndexController extends Controller
@@ -138,6 +139,23 @@ class IndexController extends Controller
                 'form' => $form->createView(),
                 'action' => $this->generateUrl('app_articulo_updateAction', ['id' => $id])
 
+            ]);
+    }
+
+
+    /**
+     * @Route("/single/{id}", name="app_articulo_single")
+     *
+     */
+    public function singleUser (User $user) {
+       // $m = $this->getDoctrine()->getManager();
+        //$report = $m->getRepository('UserBundle:User');
+        //$usuario = $report->findOneBy(array('user_id' => $usuarioID));
+
+        return $this->render(':index:singleUser.html.twig',
+            [
+                'usuario' => $user ,
+                'articulos' =>$user->getArticulos()
             ]);
     }
 
