@@ -8,7 +8,7 @@
             border-collapse: collapse;
         }
     </style>
-    <table class =" col-sm-12 col-md-12 col-lg-12">
+    <table class ="table col-sm-12 col-md-12 col-lg-12">
         <thead>
         <tr>
             <th>Titulo</th>
@@ -16,17 +16,17 @@
             <th>Create At</th>
             <th>Update At</th>
         </tr>
+        </tr>
         </thead>
         {% for articulo in articulos %}
             <tbody>
-            <tr style = "border-bottom: 2px solid black;">
+            <tr>
                 <td style="width: 10%; ">{{ articulo.getTitulo}}</td>
                 <td maxlength="3">{{ articulo.getCuerpo }}</td>
                 <td>{{ articulo.getCreateAt|date("d/m/y H:i:s") }}</td>
                 <td>{{ articulo.getUpdateAt|date("d/m/y H:i:s") }}</td>
 
             </tr>
-
             </tbody>
         {% endfor %}
     </table>

@@ -21,6 +21,7 @@
 }
 
 .articulo {
+    margin-top: 1em;
     min-height: 100px;
     height: 170px;
 }
@@ -31,5 +32,5 @@
 
 .label {
     font-size: 1.5em;
-    color: #0f0f0f;
+    color: #0f0f0f !important;
 }

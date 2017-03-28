@@ -18,6 +18,10 @@
                     {% if articulo.user == app.user%}
                         <span> <a class ="fi glyphicon glyphicon-remove" href="{{ path('app_articulo_delete', {'id' : articulo.id}) }}"></a></span>
                         <span><a class ="fi glyphicon glyphicon-pencil" href="{{ path('app_articulo_update', {'id' : articulo.id}) }}"></a></span>
+
+                    {% elseif  is_granted('ROLE_SUPER_ADMIN')  %}
+                        <span> <a class ="fi glyphicon glyphicon-remove" href="{{ path('app_articulo_delete', {'id' : articulo.id}) }}"></a></span>
+                        <span><a class ="fi glyphicon glyphicon-pencil" href="{{ path('app_articulo_update', {'id' : articulo.id}) }}"></a></span>
                     {% endif %}
 
                 </div>
