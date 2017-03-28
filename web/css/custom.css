@@ -19,3 +19,17 @@
 .margin-bottom-lg {
     margin-bottom: 30px;
 }
+
+.articulo {
+    min-height: 100px;
+    height: 170px;
+}
+
+.cuerpo {
+    height: 5em;
+}
+
+.label {
+    font-size: 1.5em;
+    color: #0f0f0f;
+}
