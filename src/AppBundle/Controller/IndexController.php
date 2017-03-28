@@ -89,12 +89,17 @@ class IndexController extends Controller
      */
     public function deleteAction ($articulo) {
 
-        $m = $this->getDoctrine()->getManager();
-        $m->remove($articulo);
-        $m->flush();
-        $this->addFlash('messages', 'Producto eliminao CHAACHO');
+        if ($this->getUser() == $articulo->getUser()){
+            $m = $this->getDoctrine()->getManager();
+            $m->remove($articulo);
+            $m->flush();
+            $this->addFlash('messages', 'Producto eliminao CHAACHO');
 
-        return $this->redirectToRoute('app_index_index');
+            return $this->redirectToRoute('app_index_index');
+        } else {
+            return $this->redirectToRoute('app_index_index');
+        }
+
     }
 
 
@@ -112,6 +117,7 @@ class IndexController extends Controller
         $form = $this->createForm(ArticuloType::class, $p);
         return $this->render(':index:upload.html.twig',
             [
+                'articulo' => $p,
                 'form' => $form->createView(),
                 'headTitle' => 'Create Article',
                 'action' => $this->generateUrl('app_articulo_updateAction', ['id' => $id])
