@@ -27,9 +27,6 @@ class IndexController extends Controller
         $report = $m->getRepository('AppBundle:Articulo');
         $articulos = $report->findAll();
 
-
-
-
         return $this->render('index/index.html.twig',
             [
                 'articulos' => $articulos,

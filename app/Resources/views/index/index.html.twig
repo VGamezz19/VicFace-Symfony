@@ -1,9 +1,9 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    <h1>Articles CRUD</h1>
+    <h1>Articulos CRUD</h1>
 
-
+<!--|sort|reverse -->
     {% for articulo in articulos %}
 
         <div class = "articulo col-md-12 col-lg-12 jumbotron">
@@ -25,7 +25,7 @@
                         {% endif %}
 
                     </div>
-                    <hr>
+
                     <form action="{{ path('app_comentario_createAction', {'id' : articulo.id}) }}" method="post">
                         <div class="input-group">
 
@@ -42,10 +42,10 @@
                             <span>{{ comentario.getComentario }}</span>
                         </div>
                         <div class ="col-md-4 col-lg-4">
-                            Posted {{ comentario.getUpdateAt|date("d/m/y H:i:s") }}
+                            <span class ="badge">{{ comentario.getUpdateAt|date("d/m/y H:i") }}</span>
                         </div>
                         <div class = "col-md-2 col-lg-2">
-                            <span>{{  comentario.getOwner}}</span>
+                            <a href="{{ path('app_articulo_single', {'id' : comentario.getOwner.getId}) }}">{{ comentario.getOwner }}</a>
                         </div>
                     </div>
 

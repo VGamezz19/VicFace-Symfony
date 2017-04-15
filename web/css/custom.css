@@ -25,10 +25,19 @@
     min-height: 100px;
 }
 
-.cuerpo {
-
+.jumbotron {
+     padding-top: 0 !important;
+     padding-bottom: 0 !important;
 }
 
+.input-group {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+hr {
+    border-top: 1px solid #616161 !important;
+}
 .label {
     font-size: 1.5em;
     color: #0f0f0f !important;

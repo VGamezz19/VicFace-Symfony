@@ -29,12 +29,7 @@ class Comentario
     private $comentario;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="owner", type="string", length=255)
-
      * @ORM\ManyToOne(targetEntity="Trascastro\UserBundle\Entity\User", inversedBy="comentario")
-
      */
     private $owner;
 
@@ -108,11 +103,7 @@ class Comentario
     }
 
     /**
-     * Set owner
-     *
-     * @param string $owner
-     *
-     * @return Comentario
+     * @param mixed $owner
      */
     public function setOwner($owner)
     {
@@ -124,7 +115,7 @@ class Comentario
     /**
      * Get owner
      *
-     * @return string
+     * @return mixed
      */
     public function getOwner()
     {
