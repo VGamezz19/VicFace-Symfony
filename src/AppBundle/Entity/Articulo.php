@@ -17,6 +17,29 @@ class Articulo
      * @ORM\ManyToOne(targetEntity="Trascastro\UserBundle\Entity\User", inversedBy="articulos")
      */
     private $user;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comentario", mappedBy="articuloOwner")
+     */
+    private $comentarios;
+
+    /**
+     * @return mixed
+     */
+    public function getComentarios()
+    {
+        return $this->comentarios;
+    }
+
+    /**
+     * @param mixed $comentario
+     */
+    public function setComentarios($comentarios)
+    {
+        $this->comentarios = $comentarios;
+    }
+
     /**
      * @var int
      *

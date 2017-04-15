@@ -38,6 +38,27 @@ class User extends BaseUser
     private $articulos;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comentario", mappedBy="owner")
+     */
+    private $comentario;
+
+    /**
+     * @return mixed
+     */
+    public function getComentario()
+    {
+        return $this->comentario;
+    }
+
+    /**
+     * @param mixed $comentario
+     */
+    public function setComentario($comentario)
+    {
+        $this->comentario = $comentario;
+    }
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
