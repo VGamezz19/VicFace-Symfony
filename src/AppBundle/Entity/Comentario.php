@@ -61,6 +61,19 @@ class Comentario
 
 
     /**
+     * Articulo constructor
+     * @param \DateTime $createAt
+     * @param \DateTime $updateAt
+     */
+    public function __construct()
+    {
+        $this->createAt = new \DateTime();
+        $this->updateAt = $this->createAt;
+    }
+
+
+
+    /**
      * Get id
      *
      * @return int

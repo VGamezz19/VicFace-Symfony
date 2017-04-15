@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\AppBundle;
+use AppBundle\Entity\Comentario;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\Articulo;
 use AppBundle\Form\ArticuloType;
@@ -26,9 +27,13 @@ class IndexController extends Controller
         $report = $m->getRepository('AppBundle:Articulo');
         $articulos = $report->findAll();
 
+
+
+
         return $this->render('index/index.html.twig',
             [
                 'articulos' => $articulos,
+                //'comentarios' => $articulos->getComentarios()
             ]);
 
     }
@@ -81,6 +86,33 @@ class IndexController extends Controller
 
             ]);
     }
+
+
+    /**
+     * @Route("/createActionComentario/{id}", name="app_comentario_createAction")
+     *
+     */
+    public function doCreateComment (Request $request, Articulo $id){
+        //buscamos el articulo que esta haciendo el nuevo comentario
+        $m = $this->getDoctrine()->getManager();
+        $report = $m->getRepository('AppBundle:Articulo');
+        $articulo = $report->find($id);
+
+        $comentario = new Comentario();
+
+            $m = $this->getDoctrine()->getManager();
+            $comentario->setComentario($request->request->get('comentarioInput'));
+
+            $comentario->setOwner($this->getUser()); //Añadimos el owner del comentario
+            $comentario->setArticuloOwner($articulo); //le pasamos el ID del form.
+
+            $m->persist($comentario);
+            $m->flush();
+
+            return $this->redirectToRoute('app_index_index'); //para generar otravez la tabla principal
+    }
+
+
 
     /**
      * @Route("/delete/{id}", name="app_articulo_delete")

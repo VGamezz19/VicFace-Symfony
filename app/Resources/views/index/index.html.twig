@@ -6,26 +6,52 @@
 
     {% for articulo in articulos %}
 
-        <div class = "articulo col-md-6 col-lg-6">
+        <div class = "articulo col-md-12 col-lg-12 jumbotron">
             <h1>{{ articulo.titulo }}</h1>
             <p class ="cuerpo">{{ articulo.cuerpo }}</p>
             <div>
-                <span class="badge">Posted {{ articulo.createAt|date("d/m/y H:i:s") }}</span>
-                <div class="pull-right">
-            <span class="label ">
-                <a href="{{ path('app_articulo_single', {'id' : articulo.user.getId}) }}">{{ articulo.user }}</a>
-            </span>
-                    {% if articulo.user == app.user%}
-                        <span> <a class ="fi glyphicon glyphicon-remove" href="{{ path('app_articulo_delete', {'id' : articulo.id}) }}"></a></span>
-                        <span><a class ="fi glyphicon glyphicon-pencil" href="{{ path('app_articulo_update', {'id' : articulo.id}) }}"></a></span>
+                    <span class="badge">Posted {{ articulo.createAt|date("d/m/y H:i:s") }}</span>
+                    <div class="pull-right">
+                <span class="label ">
+                    <a href="{{ path('app_articulo_single', {'id' : articulo.user.getId}) }}">{{ articulo.user }}</a>
+                </span>
+                        {% if articulo.user == app.user%}
+                            <span> <a class ="fi glyphicon glyphicon-remove" href="{{ path('app_articulo_delete', {'id' : articulo.id}) }}"></a></span>
+                            <span><a class ="fi glyphicon glyphicon-pencil" href="{{ path('app_articulo_update', {'id' : articulo.id}) }}"></a></span>
 
-                    {% elseif  is_granted('ROLE_SUPER_ADMIN')  %}
-                        <span> <a class ="fi glyphicon glyphicon-remove" href="{{ path('app_articulo_delete', {'id' : articulo.id}) }}"></a></span>
-                        <span><a class ="fi glyphicon glyphicon-pencil" href="{{ path('app_articulo_update', {'id' : articulo.id}) }}"></a></span>
-                    {% endif %}
+                        {% elseif  is_granted('ROLE_SUPER_ADMIN')  %}
+                            <span> <a class ="fi glyphicon glyphicon-remove" href="{{ path('app_articulo_delete', {'id' : articulo.id}) }}"></a></span>
+                            <span><a class ="fi glyphicon glyphicon-pencil" href="{{ path('app_articulo_update', {'id' : articulo.id}) }}"></a></span>
+                        {% endif %}
 
-                </div>
-                <hr>
+                    </div>
+                    <hr>
+                    <form action="{{ path('app_comentario_createAction', {'id' : articulo.id}) }}" method="post">
+                        <div class="input-group">
+
+                          <input type="text" class="form-control" name ="comentarioInput" placeholder="Comenta!">
+                            <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="button">Enviar</button>
+                          </span>
+                        </div>
+                    </form>
+
+                {% for comentario in articulo.getComentarios %}
+                    <div class ="row">
+                        <div class ="col-md-6 col-lg-6">
+                            <span>{{ comentario.getComentario }}</span>
+                        </div>
+                        <div class ="col-md-4 col-lg-4">
+                            Posted {{ comentario.getUpdateAt|date("d/m/y H:i:s") }}
+                        </div>
+                        <div class = "col-md-2 col-lg-2">
+                            <span>{{  comentario.getOwner}}</span>
+                        </div>
+                    </div>
+
+                    <hr>
+                {% endfor %}
+
             </div>
         </div>
 
