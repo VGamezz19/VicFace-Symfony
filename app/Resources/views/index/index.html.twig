@@ -47,6 +47,15 @@
                         <div class = "col-md-2 col-lg-2">
                             <a href="{{ path('app_articulo_single', {'id' : comentario.getOwner.getId}) }}">{{ comentario.getOwner }}</a>
                         </div>
+                        {% if comentario.getOwner == app.user%}
+                            <span> <a class ="fi glyphicon glyphicon-remove" href="{{ path('app_comentario_delete', {'id' : comentario.getId }) }}"></a></span>
+                            <span><a class ="fi glyphicon glyphicon-pencil" href="{{ path('app_comentario_delete', {'id' : comentario.getId}) }}"></a></span>
+
+                        {% elseif  is_granted('ROLE_SUPER_ADMIN')  %}
+                            <span> <a class ="fi glyphicon glyphicon-remove" href="{{ path('app_comentario_delete', {'id' : comentario.getId }) }}"></a></span>
+                            <span><a class ="fi glyphicon glyphicon-pencil" href="{{ path('app_comentario_delete', {'id' : comentario.getId}) }}"></a></span>
+                        {% endif %}
+
                     </div>
 
                     <hr>

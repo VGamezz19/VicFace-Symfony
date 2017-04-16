@@ -2,13 +2,10 @@
 
 {% block body %}
 <form method="post" action="{{ action }}" novalidate="novalidate">
-    {% if articulo.user == app.user%}
+
         <h1> {{ headTitle }}</h1>
         {{ form(form) }}
-        {% else  %}
-            <h1> No puedes pasar</h1>
-        <img id = "imagen"src="{{ asset("images/giphy-downsized-large.gif") }} "/>
-            {% endif %}
+
 </form>
 
 {% endblock %}

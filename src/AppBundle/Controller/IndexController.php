@@ -29,8 +29,8 @@ class IndexController extends Controller
 
         return $this->render('index/index.html.twig',
             [
-                'articulos' => $articulos,
-                //'comentarios' => $articulos->getComentarios()
+                'articulos' => $articulos
+
             ]);
 
     }
@@ -86,39 +86,13 @@ class IndexController extends Controller
 
 
     /**
-     * @Route("/createActionComentario/{id}", name="app_comentario_createAction")
-     *
-     */
-    public function doCreateComment (Request $request, Articulo $id){
-        //buscamos el articulo que esta haciendo el nuevo comentario
-        $m = $this->getDoctrine()->getManager();
-        $report = $m->getRepository('AppBundle:Articulo');
-        $articulo = $report->find($id);
-
-        $comentario = new Comentario();
-
-            $m = $this->getDoctrine()->getManager();
-            $comentario->setComentario($request->request->get('comentarioInput'));
-
-            $comentario->setOwner($this->getUser()); //Añadimos el owner del comentario
-            $comentario->setArticuloOwner($articulo); //le pasamos el ID del form.
-
-            $m->persist($comentario);
-            $m->flush();
-
-            return $this->redirectToRoute('app_index_index'); //para generar otravez la tabla principal
-    }
-
-
-
-    /**
      * @Route("/delete/{id}", name="app_articulo_delete")
      *
      * @ParamConverter(name="articulo", class="AppBundle:Articulo")
      */
     public function deleteAction ($articulo) {
 
-        if ($this->getUser() == $articulo->getUser()){
+        if ($this->getUser() == $articulo->getUser() or $this->isGranted('ROLE_SUPER_ADMIN')){
             $m = $this->getDoctrine()->getManager();
             $m->remove($articulo);
             $m->flush();
@@ -144,13 +118,19 @@ class IndexController extends Controller
         $report = $m->getRepository('AppBundle:Articulo');
         $p = $report->find($id);
         $form = $this->createForm(ArticuloType::class, $p);
-        return $this->render(':index:upload.html.twig',
-            [
-                'articulo' => $p,
-                'form' => $form->createView(),
-                'headTitle' => 'Create Article',
-                'action' => $this->generateUrl('app_articulo_updateAction', ['id' => $id])
-            ]);
+
+        if ($p->getUser() == $this->getUser() or $this->isGranted('ROLE_SUPER_ADMIN')){
+            return $this->render(':index:upload.html.twig',
+                [
+                    'articulo' => $p,
+                    'form' => $form->createView(),
+                    'headTitle' => 'Create Article',
+                    'action' => $this->generateUrl('app_articulo_updateAction', ['id' => $id])
+                ]);
+        } else {
+            return $this->redirectToRoute('app_index_index');
+        }
+
     }
     /**
      * @Route("/updateAction/{id}", name="app_articulo_updateAction")
@@ -217,5 +197,52 @@ class IndexController extends Controller
         return $this->render(':index:upload.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+
+    //_________________________________________________________________________
+    //Comentarios
+
+    /**
+     * @Route("/createActionComentario/{id}", name="app_comentario_createAction")
+     *
+     */
+    public function doCreateComment (Request $request, Articulo $id){
+        //buscamos el articulo que esta haciendo el nuevo comentario
+        $m = $this->getDoctrine()->getManager();
+        $report = $m->getRepository('AppBundle:Articulo');
+        $articulo = $report->find($id);
+
+        $comentario = new Comentario();
+
+        $m = $this->getDoctrine()->getManager();
+        $comentario->setComentario($request->request->get('comentarioInput'));
+
+        $comentario->setOwner($this->getUser()); //Añadimos el owner del comentario
+        $comentario->setArticuloOwner($articulo); //le pasamos el ID del form.
+
+        $m->persist($comentario);
+        $m->flush();
+
+        return $this->redirectToRoute('app_index_index'); //para generar otravez la tabla principal
+    }
+
+    /**
+     * @Route("/deleteComment/{id}", name="app_comentario_delete")
+     *
+     * @ParamConverter(name="comentario", class="AppBundle:Comentario")
+     */
+    public function deleteComentario ( Comentario $comentario) {
+
+        if ($this->getUser() == $comentario->getOwner() or $this->isGranted('ROLE_SUPER_ADMIN')){
+            $m = $this->getDoctrine()->getManager();
+            $m->remove($comentario);
+            $m->flush();
+
+            return $this->redirectToRoute('app_index_index');
+        } else {
+            return $this->redirectToRoute('app_index_index');
+        }
+
     }
 }

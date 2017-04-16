@@ -4,6 +4,7 @@ security:
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     providers:
         fos_userbundle:
@@ -25,7 +26,9 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/admin/, role: ROLE_SUPER_ADMIN }
         - { path: ^/update/, role: ROLE_USER}
         - { path: ^/delete/, role: ROLE_USER}
         - { path: ^/create/, role: ROLE_USER}
+        - { path: ^/single/, role: ROLE_USER}
+        - { path: ^/createActionComentario/, role: ROLE_USER}
