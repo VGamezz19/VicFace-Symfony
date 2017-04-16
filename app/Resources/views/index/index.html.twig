@@ -41,19 +41,26 @@
                         <div class ="col-md-6 col-lg-6">
                             <span>{{ comentario.getComentario }}</span>
                         </div>
-                        <div class ="col-md-4 col-lg-4">
-                            <span class ="badge">{{ comentario.getUpdateAt|date("d/m/y H:i") }}</span>
+                        <div class ="col-md-2 col-lg-2">
+                            <span style ="float: right"class ="badge">{{ comentario.getUpdateAt|date("d/m/y H:i") }}</span>
                         </div>
                         <div class = "col-md-2 col-lg-2">
-                            <a href="{{ path('app_articulo_single', {'id' : comentario.getOwner.getId}) }}">{{ comentario.getOwner }}</a>
+                            <a style="float: right" href="{{ path('app_articulo_single', {'id' : comentario.getOwner.getId}) }}">{{ comentario.getOwner }}</a>
                         </div>
                         {% if comentario.getOwner == app.user%}
-                            <span> <a class ="fi glyphicon glyphicon-remove" href="{{ path('app_comentario_delete', {'id' : comentario.getId }) }}"></a></span>
-                            <span><a class ="fi glyphicon glyphicon-pencil" href="{{ path('app_comentario_delete', {'id' : comentario.getId}) }}"></a></span>
-
+                            <div class ="col-md-1 col-lg-1">
+                                <span> <a class ="fi glyphicon glyphicon-remove" href="{{ path('app_comentario_delete', {'id' : comentario.getId }) }}"></a></span>
+                            </div>
+                            <div class ="col-md-1 col-lg-1">
+                                <span><a class ="fi glyphicon glyphicon-pencil" href="{{ path('app_comentario_delete', {'id' : comentario.getId}) }}"></a></span>
+                            </div>
                         {% elseif  is_granted('ROLE_SUPER_ADMIN')  %}
-                            <span> <a class ="fi glyphicon glyphicon-remove" href="{{ path('app_comentario_delete', {'id' : comentario.getId }) }}"></a></span>
-                            <span><a class ="fi glyphicon glyphicon-pencil" href="{{ path('app_comentario_delete', {'id' : comentario.getId}) }}"></a></span>
+                            <div class ="col-md-1 col-lg-1">
+                                <span> <a class ="fi glyphicon glyphicon-remove" href="{{ path('app_comentario_delete', {'id' : comentario.getId }) }}"></a></span>
+                            </div>
+                            <div class ="col-md-1 col-lg-1">
+                                <span><a class ="fi glyphicon glyphicon-pencil" href="{{ path('app_comentario_delete', {'id' : comentario.getId}) }}"></a></span>
+                            </div>
                         {% endif %}
 
                     </div>

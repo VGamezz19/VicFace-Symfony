@@ -66,14 +66,20 @@
 <div class="container">
     <div class="margin-bottom-md"></div>
     <div class="row">
-        <div class="col-md-8">
+        {% if app.user%}
+            <div class="col-md-8">
+        {% else %}
+            <div class="col-md-12">
+        {% endif %}
+
             {% block body %}{% endblock %}
         </div>
         <div class="col-md-4">
             {% block sidebar %}
+                {% if app.user%}
                 <div class="container-fluid">
                     <div class="row margin-bottom-md" style="position: fixed;     width: 27%;">
-                        {% if app.user%}
+
                         <div class="col-md-12">
                             <a class="btn btn-default" style="font-size:x-large; width: 100%;" href="/">Hola {{ app.user }}</a>
                         </div>
@@ -83,9 +89,10 @@
                         <div class="col-md-6">
                             <a class="btn btn-default" style="font-size: 1.6em;width: 100%;" href="{{path('app_articulo_single', {'id': app.user.getId})}}">Mira tu perfil</a>
                         </div>
-                        {% endif %}
+
                     </div>
                 </div>
+                {% endif %}
             {% endblock %}
         </div>
     </div>
