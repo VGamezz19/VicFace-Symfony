@@ -52,14 +52,14 @@
                                 <span> <a class ="fi glyphicon glyphicon-remove" href="{{ path('app_comentario_delete', {'id' : comentario.getId }) }}"></a></span>
                             </div>
                             <div class ="col-md-1 col-lg-1">
-                                <span><a class ="fi glyphicon glyphicon-pencil" href="{{ path('app_comentario_delete', {'id' : comentario.getId}) }}"></a></span>
+                                <span><span id ="updateComment" class ="fi glyphicon glyphicon-pencil" ></span></span>
                             </div>
                         {% elseif  is_granted('ROLE_SUPER_ADMIN')  %}
                             <div class ="col-md-1 col-lg-1">
                                 <span> <a class ="fi glyphicon glyphicon-remove" href="{{ path('app_comentario_delete', {'id' : comentario.getId }) }}"></a></span>
                             </div>
                             <div class ="col-md-1 col-lg-1">
-                                <span><a class ="fi glyphicon glyphicon-pencil" href="{{ path('app_comentario_delete', {'id' : comentario.getId}) }}"></a></span>
+                                <span><span  id="updateComment" class ="fi glyphicon glyphicon-pencil"></span></span>
                             </div>
                         {% endif %}
 
@@ -70,7 +70,6 @@
 
             </div>
         </div>
-
 
     {% endfor %}
 

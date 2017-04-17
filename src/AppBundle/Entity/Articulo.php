@@ -25,20 +25,9 @@ class Articulo
     private $comentarios;
 
     /**
-     * @return mixed
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Notificacion", mappedBy="articuloNotificacion")
      */
-    public function getComentarios()
-    {
-        return $this->comentarios;
-    }
-
-    /**
-     * @param mixed $comentario
-     */
-    public function setComentarios($comentarios)
-    {
-        $this->comentarios = $comentarios;
-    }
+    private $notificacionArticulo;
 
     /**
      * @var int
@@ -87,6 +76,41 @@ class Articulo
         $this->createAt = new \DateTime();
         $this->updateAt = $this->createAt;
     }
+
+    //_______________________________________________________________________________________________
+
+    /**
+     * @return mixed
+     */
+    public function getNotificacionArticulo()
+    {
+        return $this->notificacionArticulo;
+    }
+
+    /**
+     * @param mixed $notificacionArticulo
+     */
+    public function setNotificacionArticulo($notificacionArticulo)
+    {
+        $this->notificacionArticulo = $notificacionArticulo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComentarios()
+    {
+        return $this->comentarios;
+    }
+
+    /**
+     * @param mixed $comentario
+     */
+    public function setComentarios($comentarios)
+    {
+        $this->comentarios = $comentarios;
+    }
+
 
     /**
      * Get id

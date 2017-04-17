@@ -43,6 +43,62 @@ class User extends BaseUser
     private $comentario;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Notificacion", mappedBy="ownerNotificacion")
+     */
+    private $notificacionOwner;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Notificacion", mappedBy="notificacionLlegadaUsuario")
+     */
+    private $notificacionLlegada;
+
+
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->createdAt    = new \DateTime();
+        $this->updatedAt    = $this->createdAt;
+    }
+
+
+    //___________________________________________________________________________________________
+
+    /**
+     * @return mixed
+     */
+    public function getNotificacionLlegada()
+    {
+        return $this->notificacionLlegada;
+    }
+
+    /**
+     * @param mixed $notificacionLlegada
+     */
+    public function setNotificacionLlegada($notificacionLlegada)
+    {
+        $this->notificacionLlegada = $notificacionLlegada;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNotificacionOwner()
+    {
+        return $this->notificacionOwner;
+    }
+
+    /**
+     * @param mixed $notificacion
+     */
+    public function setNotificacionOwner($notificacionOwner)
+    {
+        $this->notificacionOwner = $notificacionOwner;
+    }
+
+
+    /**
      * @return mixed
      */
     public function getComentario()
@@ -72,13 +128,6 @@ class User extends BaseUser
      */
     private $updatedAt;
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->createdAt    = new \DateTime();
-        $this->updatedAt    = $this->createdAt;
-    }
 
     public function setCreatedAt()
     {

@@ -15,6 +15,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Trascastro\UserBundle\Entity\User;
 
 
+//________________________________________________________________________
+//Home View
 class IndexController extends Controller
 {
     /**
@@ -35,6 +37,8 @@ class IndexController extends Controller
 
     }
 
+//________________________________________________________________________
+//Start Articulo
 
     /**
      * @Route("/create", name="app_articulo_create")
@@ -198,10 +202,12 @@ class IndexController extends Controller
             'form' => $form->createView(),
         ]);
     }
+//________________________________________________________________________
+//End Articulo
 
 
-    //_________________________________________________________________________
-    //Comentarios
+//________________________________________________________________________
+//Start Comentario
 
     /**
      * @Route("/createActionComentario/{id}", name="app_comentario_createAction")
@@ -245,4 +251,17 @@ class IndexController extends Controller
         }
 
     }
+
+//________________________________________________________________________
+//End Comentario
+
+
+//________________________________________________________________________
+//Start Notificacion
+
+
+//________________________________________________________________________
+//End Notificacion
+
+
 }

@@ -18,8 +18,8 @@
         </tr>
         </tr>
         </thead>
+        <tbody>
         {% for articulo in articulos %}
-            <tbody>
             <tr>
                 <td style="width: 10%; ">{{ articulo.getTitulo}}</td>
                 <td maxlength="3">{{ articulo.getCuerpo }}</td>
@@ -27,8 +27,9 @@
                 <td>{{ articulo.getUpdateAt|date("d/m/y H:i:s") }}</td>
 
             </tr>
-            </tbody>
+
         {% endfor %}
+        </tbody>
     </table>
 
 {% endblock %}
