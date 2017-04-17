@@ -14,12 +14,14 @@
         {% endfor %}
 
         {% if sum %}
-            <div class = "articulo col-md-12 col-lg-12 jumbotron articuloNotificado">
-                <a href="{{ path('app_notificacion_delete', {'id' : articulo.id}) }}">
 
+            <div class = "articulo col-md-12 col-lg-12 jumbotron articuloNotificado">
+
+                <a href="{{ path('app_notificacion_delete', {'id' : articulo.id}) }}">
                     <div class ="circuloNotificacion">
                         <p class ="notificacion"> {{ sum }}</p>
                     </div>
+                </a>
 
                     <h1>{{ articulo.titulo }}</h1>
                     <p class ="cuerpo">{{ articulo.cuerpo }}</p>
@@ -76,7 +78,6 @@
                             <hr>
                         {% endfor %}
                     </div>
-                </a>
             </div>
         {% else %}
 

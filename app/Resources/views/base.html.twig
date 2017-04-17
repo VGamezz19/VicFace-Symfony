@@ -88,15 +88,34 @@
                 <div class="container-fluid">
                     <div class="row margin-bottom-md" style="position: fixed;     width: 27%;">
 
-                        <div class="col-md-12">
+                        <div class="col-md-12 col-lg-12">
                             <a class="btn btn-default" style="font-size:x-large; width: 100%;" href="/">Hola {{ app.user }} </a>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-lg-6">
                             <a class="btn btn-default" style="font-size: 1.6em; " href="/create">Crea un articulo</a>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-lg-6">
                             <a class="btn btn-default" style="font-size: 1.6em;width: 100%;" href="{{path('app_articulo_single', {'id': app.user.getId})}}">Mira tu perfil</a>
                         </div>
+
+                            {% for notificacion in app.user.getNotificacionLlegada %}
+                                <div class=" btn btn-default col-md-12 col-lg-12" style="width: 92%;margin-left: 4%;margin-top: 1em; padding-right: 0 !important;">
+                                    <div class ="col-md-8 col-lg-8" style="padding-left: 0 !important; text-align: left;">
+                                        <span>{{ notificacion.getOwnerNotificacion }} ha comentado tu articulo</span>
+                                    </div>
+                                    <div class ="col-md-2 col-lg-2" style ="padding-right: 0 !important;margin-left: 1em;">
+                                        <span style ="float: right"class ="badge">{{ notificacion.getCreateAt|date("d/m/y H:i") }}</span>
+                                    </div>
+                                    <div class ="col-md-1 col-lg-1">
+                                        <span> <a class ="fi glyphicon glyphicon-remove" href="{{ path('app_notificacionSingle_delete', {'id' : notificacion.getId }) }}"></a></span>
+                                    </div>
+
+                                </div>
+                                {% for usuario in notificacion.getOwnerNotificacion %}
+                                    2
+
+                                {% endfor %}
+                            {% endfor %}
 
                     </div>
                 </div>

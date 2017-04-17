@@ -102,11 +102,19 @@ class IndexController extends Controller
 
 
             $comentario = $articulo->getComentarios();
-            $arr_length = count($comentario);
+            $comentariosArray = count($comentario);
 
-            for($i=0; $i<$arr_length; $i++) {
+            for($i=0; $i<$comentariosArray; $i++) {
 
                 $m->remove($comentario[$i]);
+            }
+
+            $notificaciones = $articulo->getNotificacionArticulo();
+            $notificacionesArray = count($notificaciones);
+
+            for($i=0; $i<$notificacionesArray; $i++) {
+
+                $m->remove($notificaciones[$i]);
             }
 
             $m->remove($articulo);
@@ -314,6 +322,26 @@ class IndexController extends Controller
                 $m->remove($notificacion[$i]);
             }
 
+            $m->flush();
+
+            return $this->redirectToRoute('app_index_index');
+        } else {
+            return $this->redirectToRoute('app_index_index');
+        }
+
+    }
+
+    /**
+     * @Route("/deleteNotificacionSingle/{id}", name="app_notificacionSingle_delete")
+     *
+     * @ParamConverter(name="notificacion", class="AppBundle:Notificacion")
+     */
+    public function deleteSingleNotificacion ( Notificacion $notificacion) {
+
+        if ($this->getUser() == $notificacion->getNotificacionLlegadaUsuario()){
+
+            $m = $this->getDoctrine()->getManager();
+            $m->remove($notificacion);
             $m->flush();
 
             return $this->redirectToRoute('app_index_index');
