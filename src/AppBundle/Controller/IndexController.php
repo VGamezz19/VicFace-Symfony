@@ -6,6 +6,7 @@ use AppBundle\AppBundle;
 use AppBundle\Entity\Comentario;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\Articulo;
+use AppBundle\Entity\Notificacion;
 use AppBundle\Form\ArticuloType;
 use AppBundle\Form\ImageType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -75,11 +76,11 @@ class IndexController extends Controller
 
             $m->persist($articulo);
             $m->flush();
-            $this->addFlash('messages', 'Producto añadido TETE');
+
 
             return $this->redirectToRoute('app_index_index'); //para generar otravez la tabla principal
         }
-        $this->addFlash('messages', 'XAVAL! QUE TE HAS "EJIBOJAO"');
+
         return $this->render(':index:upload.html.twig',
             [
                 'form' => $form->createView(),
@@ -94,13 +95,22 @@ class IndexController extends Controller
      *
      * @ParamConverter(name="articulo", class="AppBundle:Articulo")
      */
-    public function deleteAction ($articulo) {
+    public function deleteAction (Articulo $articulo) {
 
         if ($this->getUser() == $articulo->getUser() or $this->isGranted('ROLE_SUPER_ADMIN')){
             $m = $this->getDoctrine()->getManager();
+
+
+            $comentario = $articulo->getComentarios();
+            $arr_length = count($comentario);
+
+            for($i=0; $i<$arr_length; $i++) {
+
+                $m->remove($comentario[$i]);
+            }
+
             $m->remove($articulo);
             $m->flush();
-            $this->addFlash('messages', 'Producto eliminao CHAACHO');
 
             return $this->redirectToRoute('app_index_index');
         } else {
@@ -149,10 +159,9 @@ class IndexController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()){
             $m->flush();
-            $this->addFlash('messages', 'Producto UPDATEAO PAYOOO');
             return $this->redirectToRoute('app_index_index');
         }
-        $this->addFlash('messages','Tu eres tonto o que payaso? caranchoa');
+
         return $this->render(':index:upload.html.twig',
             [
                 'form' => $form->createView(),
@@ -219,16 +228,43 @@ class IndexController extends Controller
         $report = $m->getRepository('AppBundle:Articulo');
         $articulo = $report->find($id);
 
-        $comentario = new Comentario();
+        //Si es el mismo usuario, no crearemos una notificacion.
+        if ($articulo->getUser() == $this->getUser()){
 
-        $m = $this->getDoctrine()->getManager();
-        $comentario->setComentario($request->request->get('comentarioInput'));
+            $comentario = new Comentario();
 
-        $comentario->setOwner($this->getUser()); //Añadimos el owner del comentario
-        $comentario->setArticuloOwner($articulo); //le pasamos el ID del form.
+            //Rellenamos el COMENTARIO
+            $comentario->setComentario($request->request->get('comentarioInput'));
+            $comentario->setOwner($this->getUser()); //Añadimos el owner del comentario
+            $comentario->setArticuloOwner($articulo); //le pasamos el ID del form.
 
-        $m->persist($comentario);
-        $m->flush();
+            $m = $this->getDoctrine()->getManager();
+
+            $m->persist($comentario); //push
+            $m->flush();
+
+        } else {
+
+            $notificacion = new Notificacion();
+            $comentario = new Comentario();
+
+            //Rellenamos el COMENTARIO
+            $comentario->setComentario($request->request->get('comentarioInput'));
+            $comentario->setOwner($this->getUser()); //Añadimos el owner del comentario
+            $comentario->setArticuloOwner($articulo); //le pasamos el ID del form.
+
+            //Rellenamos la NOTIFICACION
+            $notificacion->setArticuloNotificacion($articulo);
+            $notificacion->setOwnerNotificacion($this->getUser());
+            $notificacion->setNotificacionLlegadaUsuario($articulo->getUser());
+
+            $m = $this->getDoctrine()->getManager();
+
+            $m->persist($comentario); //push
+            $m->persist($notificacion); //push
+            $m->flush();
+
+        }
 
         return $this->redirectToRoute('app_index_index'); //para generar otravez la tabla principal
     }
@@ -241,6 +277,8 @@ class IndexController extends Controller
     public function deleteComentario ( Comentario $comentario) {
 
         if ($this->getUser() == $comentario->getOwner() or $this->isGranted('ROLE_SUPER_ADMIN')){
+
+
             $m = $this->getDoctrine()->getManager();
             $m->remove($comentario);
             $m->flush();
@@ -258,7 +296,32 @@ class IndexController extends Controller
 
 //________________________________________________________________________
 //Start Notificacion
+    /**
+     * @Route("/deleteNotificacion/{id}", name="app_notificacion_delete")
+     *
+     * @ParamConverter(name="articulo", class="AppBundle:Articulo")
+     */
+    public function deletNotificacion ( Articulo $articulo) {
 
+        if ($this->getUser() == $articulo->getUser()){
+
+            $m = $this->getDoctrine()->getManager();
+            $notificacion = $articulo->getNotificacionArticulo();
+
+            $arr_length = count($notificacion);
+
+            for($i=0; $i<$arr_length; $i++) {
+                $m->remove($notificacion[$i]);
+            }
+
+            $m->flush();
+
+            return $this->redirectToRoute('app_index_index');
+        } else {
+            return $this->redirectToRoute('app_index_index');
+        }
+
+    }
 
 //________________________________________________________________________
 //End Notificacion

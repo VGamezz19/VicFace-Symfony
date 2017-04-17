@@ -45,10 +45,6 @@ class Notificacion
      */
     private $articuloNotificacion;
 
-    /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Comentario", inversedBy="notificacionComentario")
-     */
-    private $comentarioNotificacion;
 
     /**
      * @ORM\ManyToOne(targetEntity="Trascastro\UserBundle\Entity\User", inversedBy="notificacionLlegada")
@@ -103,21 +99,6 @@ class Notificacion
         $this->articuloNotificacion = $articuloNotificacion;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getComentarioNotificacion()
-    {
-        return $this->comentarioNotificacion;
-    }
-
-    /**
-     * @param mixed $comentarioNotificacion
-     */
-    public function setComentarioNotificacion($comentarioNotificacion)
-    {
-        $this->comentarioNotificacion = $comentarioNotificacion;
-    }
 
 
     /**

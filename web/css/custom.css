@@ -42,3 +42,41 @@ hr {
     font-size: 1.5em;
     color: #0f0f0f !important;
 }
+
+.circuloNotificacion {
+    position: absolute;
+    margin-left: 88%;
+    width: 2em;
+    top: -2.2em;
+    height: 2em;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: #f10909;
+    /* margin-bottom: -4%; */
+    padding-bottom: -1px;
+}
+
+.notificacion{
+    color: white !important;
+    margin-left: 8px;
+    font-size: 1.4em !important;
+}
+
+.articuloNotificado{
+    border: 3px solid red !important;
+}
+
+a h1 {
+    color: black !important;
+}
+
+a p {
+    color: black !important;
+}
+a p :hover {
+
+}
+a h1 :hover {
+
+}

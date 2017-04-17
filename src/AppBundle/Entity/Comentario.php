@@ -33,10 +33,6 @@ class Comentario
      */
     private $owner;
 
-    /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Notificacion", mappedBy="comentarioNotificacion")
-     */
-    private $notificacionComentario;
 
 
     /**
@@ -75,23 +71,6 @@ class Comentario
 //___________________________________________________________________________________________
 
 
-
-
-    /**
-     * @return mixed
-     */
-    public function getNotificacionComentario()
-    {
-        return $this->notificacionComentario;
-    }
-
-    /**
-     * @param mixed $notificacionComentario
-     */
-    public function setNotificacionComentario($notificacionComentario)
-    {
-        $this->notificacionComentario = $notificacionComentario;
-    }
 
     /**
      * Get id
